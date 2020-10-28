@@ -50,26 +50,174 @@ CSS : @media only screen and (max-device-width:480px) {/css样式/}"
 
 this指针：全局、调用对象、构造对象、call/apply/bind第一个参数
 
-原型继承 (prototypal inheritance) ---- obj.__proto__ === Object.prototype
+### 原型 原型链 作用域 作用域链 构造函数 new
+
+原型继承 (prototypal inheritance) 
+
+```js
+obj.__proto__ === Object.prototype
+```
+
 1、Object.prototype 2、Function.prototype 3、寄生组合继承
 DOM、attributes是属于property的一个子集、attribute和property之间的数据绑定是单向的，attribute->property；更改property和attribute上的任意值，都会将更新反映到HTML页面中；
+
+#### js的new操作符做了哪些事情
+
+```js
+var obj = new Base();
+
+// new 操作符解析
+
+// 1、创建一个空的对象
+var obj = new Object();
+// 2、链接到原型
+obj.__proto__= Base.prototype;
+// 3、绑定this指向，执行构造函数
+var result = Base.call(obj);
+// 4、确保返回的是对象
+if (typeof(result) == "object"){
+    func=result;
+}else{
+    func=obj;;
+}
+
+/*
+  create函数要接受不定量的参数，第一个参数是构造函数（也就是new操作符的目标函数），其余参数被构造函数使用。
+  new Create() 是一种js语法糖。我们可以用函数调用的方式模拟实现
+*/
+function create(Con,...args){
+    //1、创建一个空的对象
+    let obj = {}; // let obj = Object.create({});
+    //2、将空对象的原型prototype指向构造函数的原型
+    Object.setPrototypeOf(obj,Con.prototype); // obj.__proto__ = Con.prototype
+    //3、改变构造函数的上下文（this）,并将剩余的参数传入
+    let result = Con.apply(obj,args);
+    //4、在构造函数有返回值的情况进行判断
+    return result instanceof Object?result:obj;
+}
+```
+
+
 
 DOMContentLoaded、
 
 use strict：限制with、全局变量、this、变量不规范
-SPA和SEO：Todo PhantomJS \\ JS调试: log\break
+
+SPA和SEO：Todo PhantomJS 
+
+JS调试: log\break
 
 Todo (function() { /* jQuery plugin code referencing */ } )(jQuery)
 
 拷贝与深拷贝：循环遍历对象的属性赋值、ES6的Object.assign、ES6扩展运算符、JSON.parse(JSON.stringify(obj))、手动递归；immutable
 
-数据类型、数据结构、不可变数据、getOwnProperty
+### 数据类型
+
+基本类型: 5+1+1 、null、undefined、String、Number、Boolean、Object、Symbol
+
+判断数据类型: typeof、instanceof、isArray、Object.prototype.toString.call、Reflect.toString.call
+
+数据结构、不可变数据、getOwnProperty
 
 Todo 闭包 (closure)
 
-Todo 算法:字符串数据、数据处理、对象处理、遍历、
+### 体验优化
+
+图片预加载、懒加载
+
+### 性能优化
+
+### JS模块化
+
+CommonJS（nodejs）、AMD（requirejs）、CMD(seajs)、UMD、ES6 Module
+
+```js
+// AMD
+// Global
+require.config({
+    paths:{
+        "jquery":'../lib/jquery.min'
+    }
+});
+// define
+define([dep], function() {
+  return object
+})
+// use
+require([object], function(obj) {
+  obj.xxx
+})
+
+// CMD
+define(function(require, exports, module) {
+  // 模块代码
+  // 异步加载多个模块，在加载完成时，执行回调
+  require.async(['./c', './d'], function(c, d) {
+    c.doSomething();
+    d.doSomething();
+  });
+  // 使用模块系统内部的路径解析机制来解析并返回模块路径
+  console.log(require.resolve('./b')
+});
+  
+// UMD
+(function(root, factory) {
+  if (typeof module === 'object' && typeof module.exports === 'object') {
+    // 是commonjs模块规范，nodejs环境
+    var depModule = require('./umd-module-depended')
+    module.exports = factory(depModule);
+  } else if (typeof define === 'function' && define.amd) {
+    // 是AMD模块规范，如require.js
+    define(['depModule'], factory)
+  } else if (typeof define === 'function' && define.cmd) {
+    // 是CMD模块规范，如sea.js
+    define(function(require, exports, module) {
+      var depModule = require('depModule')
+      module.exports = factory(depModule)
+    })
+  } else {
+    // 没有模块环境，直接挂载在全局对象上
+    root.umdModule = factory(root.depModule);
+  }
+}(this, function(depModule) {
+  console.log('我调用了依赖模块', depModule)
+  return {
+    name: '我自己是一个umd模块'
+  }
+}))
+```
+
+
+
+### 算法
+
+Todo 数组去重
+
+Todo 算法:字符串数据、数据处理、对象处理、遍历
 
 Worker API
+
+跨域 - JSONP、domain（子域访问父域）、postMessage、反向代理、cors（跨域资源共享机制）
+
+web存储 - cookie、storage、indexedDB
+
+### javaScript的执行分为：解释和执行两个阶段。
+
+解释阶段：词法分析、语法分析、作用域规则确定；
+
+执行阶段：创建执行上下文、执行函数代码、垃圾回收。
+
+### 其他
+
+浮点精度
+
+
+
+# 工程化
+
+
+
+
 
 # 网络
 
