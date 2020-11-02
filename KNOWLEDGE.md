@@ -61,6 +61,8 @@ obj.__proto__ === Object.prototype
 1、Object.prototype 2、Function.prototype 3、寄生组合继承
 DOM、attributes是属于property的一个子集、attribute和property之间的数据绑定是单向的，attribute->property；更改property和attribute上的任意值，都会将更新反映到HTML页面中；
 
+静态方法、私有方法、Getters、Setters
+
 #### js的new操作符做了哪些事情
 
 ```js
@@ -119,7 +121,53 @@ Todo (function() { /* jQuery plugin code referencing */ } )(jQuery)
 
 数据结构、不可变数据、getOwnProperty
 
-Todo 闭包 (closure)
+##### 对象的数据属性
+
+- configurable:false, // 能否使用delete、能否需改属性特性、或能否修改访问器属性、，false为不可重新定义，默认值为true
+- enumerable:false, // 对象属性是否可通过for-in循环，flase为不可循环，默认值为true
+- writable:false, // 对象属性是否可修改,flase为不可修改，默认值为true
+- value:'value' // 对象属性的默认值，默认值为undefined
+
+##### 访问器属性
+
+- getter
+
+- setter
+
+##### 对象方法：defineProperty、getOwnPropertyNames、getOwnPropertyDescriptor、defineProperties、
+
+#### 遍历
+
+1.for...in；2.Object.keys(obj)；3.Object.getOwnPropertyNames(obj)；4.Object.getOwnPropertySymbols(obj)；5.Reflect.ownKeys(obj)；
+
+#### 闭包 (closure)
+
+##### 定义：闭包是指有权访问另一个函数作用域中的变量的函数。数学：集合进行运算时封闭的空间。
+
+##### 原理：通过函数作用域链实现。
+
+##### 作用：数据缓存、封装、隔离作用域。
+
+①函数嵌套函数
+
+②函数内部可以引用函数外部的参数和变量
+
+③参数和变量不会被垃圾回收机制回收
+
+```js
+// closure
+function space() {
+  var param = {attribute: 1}
+  function closure() {
+    console.log('param ', param) // 使用外部变量
+  }
+}
+
+```
+
+
+
+
 
 ### 体验优化
 
@@ -215,7 +263,49 @@ web存储 - cookie、storage、indexedDB
 
 # 工程化
 
+打造完整开发流程
 
+### 规范化
+
+- 目录结构的制定
+- 编码规范
+- 前后端接口规范
+- 文档规范
+- 协作工具，开发工具
+- 组件管理
+- Git分支管理
+- Commit描述规范
+- 定期CodeReview
+- 视觉图标规范
+- 开发环境规范
+- Docker+k8s
+- CLI
+
+
+
+### 自动化
+
+- 自动图标合并，涉及到css sprite，svg sprite，图标字体
+- 自动编写可视化文档，技术选型：postmark+jsdoc
+- 自动化测试，技术选型：Karma + Mocha + Expect.js
+- 自动化部署，技术选型：docker
+- 自动化问题反馈
+
+CI
+
+CD
+
+### 模块化
+
+框架性能体验优化
+
+- js的模块化
+- css的模块化
+- 资源的模块化
+
+### 组件化
+
+组件库
 
 
 
@@ -223,9 +313,13 @@ web存储 - cookie、storage、indexedDB
 
 http2.0 \ 跨域 \ proxy配置
 
+
+
 # 安全
 
 转码 escape encodeURI encodeURIComponent  \加密
+
+
 
 # ESnext
 
@@ -236,6 +330,8 @@ EX8
 EX9
 EX10
 EX11：matchAll、动态导入、import.meta、export * as ns from 'module'、Promise.allSettled、BigInt、GlobalThis、??、?.
+
+
 
 # Todo
 # React
