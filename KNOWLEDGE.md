@@ -239,7 +239,39 @@ define(function(require, exports, module) {
 
 ### 算法
 
-Todo 数组去重
+#### 数组去重
+
+```js
+// Object.keys
+for(var i = 0; i < array.length; i++) {
+  values[array[i]] = null;
+}
+Object.keys(values)
+
+// array.reduce
+// 1
+array.reduce(function(ret, cur) {
+  if(ret.indexOf(cur) === -1) ret.push(cur);
+  return ret;
+}, []);
+// 2
+let arr = array.reduce((accumulator, current) => {
+    return accumulator.includes(current) ? accumulator : accumulator.concat(current);
+}, []);
+
+// array.filter
+let arr = array.filter((item, index, arr) => arr.indexOf(item) === index);
+
+// new Set
+let arr = [...new Set(array)];
+
+// 递归、双循环、额外存储空间
+
+```
+
+
+
+
 
 Todo 算法:字符串数据、数据处理、对象处理、遍历
 
@@ -257,7 +289,9 @@ web存储 - cookie、storage、indexedDB
 
 ### 其他
 
-浮点精度
+##### 浮点精度
+
+
 
 
 
@@ -330,6 +364,17 @@ EX8
 EX9
 EX10
 EX11：matchAll、动态导入、import.meta、export * as ns from 'module'、Promise.allSettled、BigInt、GlobalThis、??、?.
+
+#### Promise
+
+#### Array
+
+```js
+array.reduce(function(total, currentValue, currentIndex, arr), initialValue)
+```
+
+
+
 
 
 
