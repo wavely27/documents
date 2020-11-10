@@ -275,6 +275,19 @@ let arr = [...new Set(array)];
 
 Todo 算法:字符串数据、数据处理、对象处理、遍历
 
+节流[throttle]\防抖[]
+
+动画与优化：
+
+```js
+@keyframes animation {
+  0% {transform: translate(0, 0);}
+  100% {transform: translate(40px, 30px);}
+}
+```
+
+setTimeout\requestAnimationFrame
+
 Worker API
 
 跨域 - JSONP、domain（子域访问父域）、postMessage、反向代理、cors（跨域资源共享机制）
@@ -395,15 +408,167 @@ array.reduce(function(total, currentValue, currentIndex, arr), initialValue)
 3. 箭头函数的解析顺序相对`||`靠前
 4. 函数体内的`this`对象，就是定义时所在的对象，而不是使用时所在的对象。
 
+### 装饰器 Decorator
 
+类的修饰、方法的修饰、函数不能修饰、core-decorators.js、Mixin、Trait、
 
 
 
 # Todo
+
+
+
 # React
+
+#### 生命周期
+
+##### constructor\render\componentDidMount\componentDidUpdate\componentWillUnmount\
+
+static getDerivedStateFromProps\shouldComponentUpdate\getSnapshotBeforeUpdate
+
+\static getDerivedStateFromError\componentDidCatch\UNSAFE_
+
+### 组件
+
+展示组件：只关心如何渲染
+
+容器组件：只关心逻辑处理
+
+#### api
+
+setState\forceUpdate
+
+defaultProps\displayName
+
+Props\state
+
+#### 性能优化
+
+##### shouldComponentUpdate、keys、fiber、production
+
+#### diff
+
+### route
+
+HashRouter、BrowserRouter
+
+##### 实现
+
+- createBrowserHistory: pushState、replaceState、popState
+- createHashHistory: location.hash=***、 location.replace()
+- createMemoryHistory: 在内存中进行历史记录的存储
+
+### HOC
+
+- 纯函数、返回组件、组合HOC
+
+- 属性代理pp（修改props、通过refs获取组件实例、抽象state、添加容器）
+
+```js
+function ppHCO(Comp) {
+  return class PP extends React.Component{
+    constructor(props) {
+      super(props)
+      this.state = {
+        name: ''
+      }
+      this.onNameChange = this.onNameChange.bind(this)
+    }
+    onNameChange(event) {
+      this.setState({
+        name: event.target.value
+      })
+    }
+    proc(wrappedComponentInstance) { // 2.通过refs获取组件实例
+      wrappedComponentInstance.method()
+    }
+    render() {
+      const newProps = {
+        name: { // 3.抽象state
+          value: this.state.name,
+          onChange: this.onNameChange
+        }
+      }
+      const props = Object.assign({}, this.props, {ref: this.proc.bind(this)}, newProps) // 1.修改props
+      return 
+      	<Warp> // 4.添加容器
+        	<Comp {...props} />
+        </Warp>
+      
+    }
+  }
+}
+```
+
+- 反向继承ii（渲染劫持、操作state）
+```js
+function iiHOC(Comp) {
+  return class II extends Comp {
+    render() {
+      console.log(this.props) // 继承来的props
+      console.log(this.state) // 操作state
+      if (this.props.flag) { // 条件渲染
+        return super.render()
+      } else {
+        const elementsTree = super.render() // 修改渲染结果
+        let newProps = {};
+        if (elementsTree && elementsTree.type === 'input') {
+        	newProps = {value: 'may the force be with you'}
+        }
+        const props = Object.assign({}, elementsTree.props, newProps)
+        const newElementsTree = React.cloneElement(elementsTree, props, elementsTree.props.children)
+        return newElementsTree
+      }
+    }
+  }
+}
+```
+- 命名 displayName = `HOC(${getName(Comp)})`
+- 问题：1.静态方法丢失、2.Refs属性不能传递、3.不能再render中使用HOC
+- demo：React-Redux、Radium
+- 其他：compose方法 和 函数式编程传递参数
+
+### redux\mobx
+
+##### redux 数据生命周期
+
+1. 调用 store.dispatch(action)。
+2. Redux store 调用传入的 reducer 函数。
+3. 根 reducer 应该把多个子 reducer 输出合并成一个单一的 state 树。
+4. Redux store 保存了根 reducer 返回的完整 state 树。
+##### saga
+
+tackEvery、takeLatest、call、fork、put、select、take、cancel、race、all、throttle(ms, pattern, saga, …args)
+
+
+
+
+
+
+
 # Vue
+
+#### mixins
+
+1.方法和参数在各组件中不共享\2.值为对象的选项，如methods,components等，选项会被合并，键冲突的组件会覆盖混入对象的\3.值为函数的选项，如created,mounted等，就会被合并调用，混合对象里的钩子函数在组件里的钩子函数之前调用
+
+### vuex
+
+
+
+
+
 # Webpakc
+
+
+
 # Node
+
+
+
+
+
+
 
 # 团队建设：周会、团建、code review、掘金输出文档、重构消除技术负债、招贤纳士、面试经验
 
