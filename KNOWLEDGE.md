@@ -275,7 +275,9 @@ let arr = [...new Set(array)];
 
 Todo 算法:字符串数据、数据处理、对象处理、遍历
 
-节流[throttle]\防抖[]
+##### 节流[throttle]\防抖[debounce] Todo
+
+防抖是控制次数，节流是控制频率
 
 动画与优化：
 
@@ -284,9 +286,24 @@ Todo 算法:字符串数据、数据处理、对象处理、遍历
   0% {transform: translate(0, 0);}
   100% {transform: translate(40px, 30px);}
 }
+
+// requestAnimationFrame
+window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+
+var start = null;
+var d = document.getElementById('SomeElementYouWantToAnimate');
+function step(timestamp) { 
+  if (start === null) start = timestamp;
+  var progress = timestamp - start;
+  d.style.left = Math.min(progress/10, 200) + "px";
+  if (progress < 2000) {
+    requestAnimationFrame(step);
+  }
+}
+requestAnimationFrame(step);
 ```
 
-setTimeout\requestAnimationFrame
+CSS animation \ requestAnimationFrame \ setTimeout
 
 Worker API
 
@@ -446,9 +463,33 @@ Props\state
 
 ##### shouldComponentUpdate、keys、fiber、production
 
-#### diff
+#### react diff、虚拟DOM
 
-### route
+- **Web UI中DOM节点跨层级的移动操作特别少，可以忽略不计**。
+- **拥有相同类的两个组件将会生成相似的树形结构，拥有不同类的两个组件将会生成不同的树形结构**。
+- **对于同一层级的一组子节点，它们可以通过唯一 id 进行区分**。
+
+1.tree diff（层级比较：只对虚拟 DOM 树进行分层比较）&& 只有增删 && 避免跨层级操作 
+
+2.component diff（类型比较）&& 不同类型整个替换、同类型diff && shouldComponentUpdate优化、类似结构尽量封装成组件
+
+3.element diff（同一层级：判断唯一key；通过lastIndex > _mountIndex向后移动；新集合对比结束，遍历旧集合）&& 移动操作 尽量向后 避免向前。
+
+#### react合成事件（SyntheticEvent）-抽象事件系统
+
+0.ReactEventListener：维持了一个映射来保存所有组件内部的事件监听和处理函数，负责事件注册和事件分发。
+
+1.事件注册：react抽象了一套事件机制，React并不会把事件处理函数直接绑定到真实的节点上，而是使用一个统一的事件监听器 ReactEventListener ，把所有事件绑定到结构的最外层 document 节点上，依赖冒泡机制完成了事件委派。（事件注册到原生document的DOM节点上，将事件回调通过事件队列存储，用于回调）
+
+2.事件分发：通过 ReactEventListener.dispatchEvent 回调函数实现
+
+3.事件绑定：组件上绑定、构造中绑定、箭头函数绑定、自动绑定
+
+4.事件对象：事件对象(event)是合成对象(SyntheticEvent)，不是原生事件对象，但通过 nativeEvent 属性访问原生事件对象
+
+特点：统一处理（兼容性），优化性能（垃圾回收，事件缓存都统一实现），事件代理（减少DOM操作），事件对象需要区分清楚。
+
+### 路由：route
 
 HashRouter、BrowserRouter
 
@@ -528,7 +569,7 @@ function iiHOC(Comp) {
 - demo：React-Redux、Radium
 - 其他：compose方法 和 函数式编程传递参数
 
-### redux\mobx
+### 数据管理：redux\mobx
 
 ##### redux 数据生命周期
 
@@ -540,9 +581,15 @@ function iiHOC(Comp) {
 
 tackEvery、takeLatest、call、fork、put、select、take、cancel、race、all、throttle(ms, pattern, saga, …args)
 
+demo Todo
 
+### hook
 
+Todo
 
+### React 17
+
+Todo
 
 
 
@@ -558,6 +605,20 @@ tackEvery、takeLatest、call、fork、put、select、take、cancel、race、all
 
 
 
+# 混合开发 hybrid
+
+
+
+
+
+# 小程序
+
+
+
+
+
+
+
 # Webpakc
 
 
@@ -565,6 +626,10 @@ tackEvery、takeLatest、call、fork、put、select、take、cancel、race、all
 # Node
 
 
+
+# 其他
+
+### HTTP
 
 
 
