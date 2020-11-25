@@ -323,6 +323,10 @@ web存储 - cookie、storage、indexedDB
 
 
 
+### TS
+
+使用技巧
+
 
 
 # 工程化
@@ -587,9 +591,13 @@ demo Todo
 
 Todo
 
+### React 16
+
+hooks、生命周期钩子收束、ref实例用法优化、API：Fragments、mome、React.lazy & React.Suspense
+
 ### React 17
 
-Todo
+性能优化，算法优化、合成事件监听对象变为rootNode，去除事件池、新的JSX转换、修复兼容性、严格处理组件返回值，解决隐患，事件优化：onFocus、onBlur、onScroll; Concurrent Mode
 
 
 
@@ -616,6 +624,20 @@ Todo
 
 
 
+
+# 前端综合平台
+
+## 技术类
+
+### 组件管理、系统管理、发布中心、文档沉淀、团队运营
+
+## 业务类
+
+### h5页面搭建平台、后台系统搭建平台、内容生产平台
+
+
+
+# Unity
 
 
 
